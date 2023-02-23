@@ -113,20 +113,21 @@ public class Tamagoshi {
      *
      * print the feeling of a Tama depending on his energy and his fun
      */
-    public void parle() {
+    public String parle() {
         boolean happyEnergy = energy > 4;
         boolean happyFun = fun > 4;
         String etat = " est heureux";
 
         if(!happyEnergy && !happyFun)
-            etat = " a la dalle et rien à faire";
+            etat = " a la dalle et s'ennuie à mourrir";
         else if(!happyEnergy)
             etat = " a la dalle";
         else if(!happyFun)
-            etat = " a rien à faire";
+            etat = " s'ennuie à mourrir";
 
         String finalEtat = etat;
         tamaLog.info(() -> name + finalEtat);
+        return name + finalEtat;
     }
 
     /**
