@@ -5,16 +5,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tamagoshi.tamagoshis.Tamagoshi;
 
-public class TamaFrame extends Application {
+public class TamaFrame {
     Stage stage;
     Tamagoshi tamagoshi;
 
-    @Override
-    public void start(Stage stage) {
-        stage.setWidth(500);
-        stage.setHeight(500);
+    public TamaFrame(Stage stage, Tamagoshi tamagoshi) {
         this.stage = stage;
-        this.tamagoshi = new Tamagoshi("à remettre dans le constructeur");
+        this.tamagoshi = tamagoshi;
 
         TamaJPanel root = new TamaJPanel(tamagoshi, stage.getWidth(), stage.getHeight());
 
@@ -25,8 +22,7 @@ public class TamaFrame extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
-        launch();
+    public void close() {
+        stage.close();
     }
-
 }
