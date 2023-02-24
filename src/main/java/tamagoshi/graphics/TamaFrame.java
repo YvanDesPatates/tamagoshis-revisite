@@ -1,6 +1,5 @@
 package tamagoshi.graphics;
 
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tamagoshi.tamagoshis.Tamagoshi;
@@ -20,9 +19,5 @@ public class TamaFrame {
         stage.setTitle(tamagoshi.getName());
         stage.setScene(scene);
         stage.show();
-    }
-
-    public void close() {
-        stage.close();
     }
 }
