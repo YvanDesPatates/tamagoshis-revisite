@@ -8,6 +8,8 @@ import tamagoshi.tamagoshis.Tamagoshi;
 import java.util.Random;
 
 public class RandomGenerator {
+
+    private RandomGenerator(){}
     private static final Random random = new Random();
     private static final char[] VOYELLES = new char[]{'a', 'e', 'i', 'o', 'u', 'y'};
     private static final char[] CONSONNES = "bcdfghjklmnpqrstvwxz".toCharArray();

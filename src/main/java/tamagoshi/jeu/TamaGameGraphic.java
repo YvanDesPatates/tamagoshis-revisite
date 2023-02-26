@@ -131,7 +131,7 @@ public class TamaGameGraphic extends Application {
 
     private void tourSuivant() {
         if (choixManger && choixJouer) {
-            if (AuMoinsUnTamaEstVivant() && nbTour < Tamagoshi.getLifeTime()) {
+            if (auMoinsUnTamaEstVivant() && nbTour < Tamagoshi.getLifeTime()) {
                 nbTour++;
                 choixJouer = false;
                 choixManger = false;
@@ -174,7 +174,7 @@ public class TamaGameGraphic extends Application {
         return sommeScoresTama / tamagoshis.size();
     }
 
-    private boolean AuMoinsUnTamaEstVivant() {
+    private boolean auMoinsUnTamaEstVivant() {
         boolean survivant = false;
         for (Tamagoshi tamagoshi : tamagoshis) {
             if (tamagoshi.isAlive()) {

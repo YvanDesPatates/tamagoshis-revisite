@@ -145,9 +145,8 @@ public class TamaGame {
         List<String> noms = Arrays.asList(nomsSaisis.split(" "));
         if (nomsSaisis.equalsIgnoreCase("r")){
             noms = new ArrayList<>();
-            RandomGenerator nameGenerator = new RandomGenerator();
             for (int i = 0; i < random.nextInt(2, 6); i++) {
-                noms.add(nameGenerator.generateRandomName());
+                noms.add(RandomGenerator.generateRandomName());
             }
         }
 
