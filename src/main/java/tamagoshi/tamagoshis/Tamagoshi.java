@@ -118,7 +118,9 @@ public class Tamagoshi {
         boolean happyFun = fun > 4;
         String etat = " est heureux";
 
-        if(!happyEnergy && !happyFun)
+        if (!isAlive())
+            etat = " est dead par ta faute";
+        else if(!happyEnergy && !happyFun)
             etat = " a la dalle et s'ennuie à mourrir";
         else if(!happyEnergy)
             etat = " a la dalle";
@@ -247,6 +249,11 @@ public class Tamagoshi {
      */
     public boolean isAliveWithoutCountingAge(){
         return energy > 0 && fun > 0;
+    }
+
+
+    public boolean isAlive(){
+        return energy > 0 && fun > 0 && age <= lifeTime;
     }
 
     @Override

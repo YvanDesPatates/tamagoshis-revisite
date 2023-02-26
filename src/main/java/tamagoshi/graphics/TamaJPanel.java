@@ -2,39 +2,52 @@ package tamagoshi.graphics;
 
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import tamagoshi.jeu.TamaGameGraphic;
 import tamagoshi.tamagoshis.Tamagoshi;
+
+import java.util.logging.Logger;
 
 public class TamaJPanel extends GridPane {
     private final Label etat;
+    private TamaGameGraphic controler;
     private final Tamagoshi tamagoshi;
     private final Label reponse;
     private final Canvas tamaDessin;
+    private Button boutonManger;
+    private Button boutonJouer;
+    private final Logger interfaceLog;
+    boolean etaitEnVie = true;
 
 
-    public TamaJPanel(Tamagoshi tamagoshi, double width, double height) {
+    public TamaJPanel(Tamagoshi tamagoshi, double width, double height, TamaGameGraphic controler) {
+        interfaceLog = Logger.getLogger("interfaceLog");
+
         this.tamagoshi = tamagoshi;
         etat = new Label(tamagoshi.parle());
-        reponse = new Label("reponse en bas de page");
+        this.controler = controler;
+        reponse = new Label("");
 
         etat.setMinWidth(width);
         etat.setAlignment(Pos.CENTER);
         reponse.setMinWidth(width);
         reponse.setAlignment(Pos.CENTER);
 
-        tamaDessin = new Canvas(width, height*0.8);
+        tamaDessin = new Canvas(width, height*0.7);
         dessineTama();
+
+        createBoutonJouer();
+        createBoutonManger();
 
         GridPane boutons = new GridPane();
         boutons.getColumnConstraints().add(new ColumnConstraints(width/2));
-        boutons.add(boutonManger(), 0, 0);
-        boutons.add(boutonJouer(), 1, 0);
+        boutons.add(boutonManger, 0, 0);
+        boutons.add(boutonJouer, 1, 0);
         boutons.setAlignment(Pos.CENTER);
 
         add(etat, 0, 0);
@@ -43,34 +56,42 @@ public class TamaJPanel extends GridPane {
         add(boutons, 0, 3);
     }
 
-    private Node boutonJouer() {
+    private void createBoutonJouer() {
         Button button = new Button("amuser");
         button.setOnMouseClicked(event -> {
+            interfaceLog.info("clique sur le bouton 'amuser' de " + tamagoshi.getName());
             if (tamagoshi.jouer()) {
                 reponse.setText("c'est vla drôle t'es un bon toi");
             } else {
                 reponse.setText("bouge de là tu vois pas jsuis pas dispo");
             }
             refreshEtat();
+            controler.tamaAJoue();
         });
-        return button;
+        boutonJouer = button;
     }
 
-    private Button boutonManger() {
+    private void createBoutonManger() {
         Button button = new Button("nourrir");
         button.setOnMouseClicked(event -> {
+            interfaceLog.info("clique sur le bouton 'jouer' de " + tamagoshi.getName());
             if (tamagoshi.manger()) {
                 reponse.setText("un régal ce grec");
             } else {
                 reponse.setText("j'suis déjà full mon pote");
             }
             refreshEtat();
+            controler.tamaAEteNourrit();
         });
-        return button;
+        boutonManger = button;
     }
 
     private void refreshEtat() {
         etat.setText(tamagoshi.parle());
+        if ( !tamagoshi.isAlive() && etaitEnVie){
+            dessineTamaMort();
+            etaitEnVie = false;
+        }
     }
 
     private void dessineTama() {
@@ -102,5 +123,60 @@ public class TamaJPanel extends GridPane {
         oeilD.dessineToi(tamaDessin.getGraphicsContext2D());
         pupilleG.colorieToi(tamaDessin.getGraphicsContext2D());
         pupilleD.colorieToi(tamaDessin.getGraphicsContext2D());
+    }
+
+    private void dessineTamaMort() {
+        double centerX = tamaDessin.getWidth()/2;
+        double centerY = tamaDessin.getHeight()/2;
+        Color couleurTama = Color.INDIANRED;
+
+        Cercle tete = new Cercle(new Point2D(centerX, centerY), tamaDessin.getWidth()/1.5, couleurTama);
+
+        double ecartementYeux = tete.getRayon()/4.5;
+        double hauteurYeux = tete.getCentre().getY() - tete.getRayon()/7;
+        double tailleYeux = tete.getRayon()/4;
+        double centreXOeilG = centerX - ecartementYeux;
+        double centreXOeilD = centerX + ecartementYeux;
+        int epaisseurTrait = 5;
+
+        Trait oeilG1 = new Trait(centreXOeilG-tailleYeux/2, hauteurYeux-tailleYeux/2,
+                                centreXOeilG+tailleYeux/2, hauteurYeux+tailleYeux/2,
+                couleurTama);
+        Trait oeilG2 = new Trait(centreXOeilG-tailleYeux/2, hauteurYeux+tailleYeux/2,
+                centreXOeilG+tailleYeux/2, hauteurYeux-tailleYeux/2,
+                couleurTama);
+
+        Trait oeilD1 = new Trait(centreXOeilD-tailleYeux/2, hauteurYeux-tailleYeux/2,
+                centreXOeilD+tailleYeux/2, hauteurYeux+tailleYeux/2,
+                couleurTama);
+        Trait oeilD2 = new Trait(centreXOeilD-tailleYeux/2, hauteurYeux+tailleYeux/2,
+                centreXOeilD+tailleYeux/2, hauteurYeux-tailleYeux/2,
+                couleurTama);
+
+        tamaDessin.getGraphicsContext2D().clearRect(0, 0, tamaDessin.getWidth(), tamaDessin.getHeight());
+
+        tete.dessineToi(tamaDessin.getGraphicsContext2D());
+        oeilG1.dessineToi(tamaDessin.getGraphicsContext2D(), epaisseurTrait);
+        oeilG2.dessineToi(tamaDessin.getGraphicsContext2D(), epaisseurTrait);
+        oeilD1.dessineToi(tamaDessin.getGraphicsContext2D(), epaisseurTrait);
+        oeilD2.dessineToi(tamaDessin.getGraphicsContext2D(), epaisseurTrait);
+    }
+
+    public void desactiveBoutonManger() {
+        boutonManger.setDisable(true);
+        refreshEtat();
+    }
+
+    public void desactiveBoutonJouer(){
+        boutonJouer.setDisable(true);
+        refreshEtat();
+    }
+
+    public void reactiveBoutons() {
+        if (tamagoshi.isAlive()) {
+            boutonJouer.setDisable(false);
+            boutonManger.setDisable(false);
+        }
+        refreshEtat();
     }
 }
