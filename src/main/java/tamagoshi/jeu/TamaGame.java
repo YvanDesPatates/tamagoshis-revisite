@@ -63,7 +63,7 @@ import tamagoshi.tamagoshis.GrosJoueur;
 import tamagoshi.tamagoshis.GrosMangeur;
 import tamagoshi.tamagoshis.Parieur;
 import tamagoshi.tamagoshis.Tamagoshi;
-import tamagoshi.util.NameGenerator;
+import tamagoshi.util.RandomGenerator;
 import tamagoshi.util.Utilisateur;
 
 import java.util.ArrayList;
@@ -145,7 +145,7 @@ public class TamaGame {
         List<String> noms = Arrays.asList(nomsSaisis.split(" "));
         if (nomsSaisis.equalsIgnoreCase("r")){
             noms = new ArrayList<>();
-            NameGenerator nameGenerator = new NameGenerator();
+            RandomGenerator nameGenerator = new RandomGenerator();
             for (int i = 0; i < random.nextInt(2, 6); i++) {
                 noms.add(nameGenerator.generateRandomName());
             }
