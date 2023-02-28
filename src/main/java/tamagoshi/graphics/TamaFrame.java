@@ -5,6 +5,9 @@ import javafx.stage.Stage;
 import tamagoshi.jeu.TamaGameGraphic;
 import tamagoshi.tamagoshis.Tamagoshi;
 
+/**
+ * convenient class used to create a window for a Tamagoshi
+ */
 public class TamaFrame {
     Stage stage;
     TamaJPanel tama;
@@ -22,14 +25,23 @@ public class TamaFrame {
         stage.show();
     }
 
+    /**
+     * forbid the tamagoshi to eat until reactiveBoutons is called
+     */
     public void desactiveBoutonManger() {
         tama.desactiveBoutonManger();
     }
 
+    /**
+     * forbid the tamagoshi to play until reactiveBoutons is called
+     */
     public void desactiveBoutonJouer() {
         tama.desactiveBoutonJouer();
     }
 
+    /**
+     * allow the tamagoshi to eat and play
+     */
     public void reactiveBoutons() {
         tama.reactiveBoutons();
     }

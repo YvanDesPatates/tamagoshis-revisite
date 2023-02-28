@@ -13,6 +13,9 @@ import tamagoshi.tamagoshis.Tamagoshi;
 
 import java.util.logging.Logger;
 
+/**
+ * a window representing a Tamagoshi
+ */
 public class TamaJPanel extends GridPane {
     private final Label etat;
     private TamaGameGraphic controler;
@@ -24,7 +27,13 @@ public class TamaJPanel extends GridPane {
     private final Logger interfaceLog;
     boolean etaitEnVie = true;
 
-
+    /**
+     * this constructor build and show a new window representing a tamagoshi
+     * @param tamagoshi the Tamagoshi you want to give a face
+     * @param width of the window
+     * @param height of the window
+     * @param controler the entity which control the game
+     */
     public TamaJPanel(Tamagoshi tamagoshi, double width, double height, TamaGameGraphic controler) {
         interfaceLog = Logger.getLogger("interfaceLog");
 
@@ -56,6 +65,9 @@ public class TamaJPanel extends GridPane {
         add(boutons, 0, 3);
     }
 
+    /**
+     * create a "play" button which will execute the jouer() method on the Tamagoshi when pressed
+     */
     private void createBoutonJouer() {
         Button button = new Button("amuser");
         button.setOnMouseClicked(event -> {
@@ -71,6 +83,9 @@ public class TamaJPanel extends GridPane {
         boutonJouer = button;
     }
 
+    /**
+     * create a "eat" button which will execute the manger() method on the Tamagoshi when pressed
+     */
     private void createBoutonManger() {
         Button button = new Button("nourrir");
         button.setOnMouseClicked(event -> {
@@ -86,6 +101,9 @@ public class TamaJPanel extends GridPane {
         boutonManger = button;
     }
 
+    /**
+     * refresh the Tamagoshi's text depending on its feelings and redrow it if he just died
+     */
     private void refreshEtat() {
         etat.setText(tamagoshi.parle());
         if ( !tamagoshi.isAlive() && etaitEnVie){
@@ -94,6 +112,9 @@ public class TamaJPanel extends GridPane {
         }
     }
 
+    /**
+     * draw the Tamagoshi on the canvas
+     */
     private void dessineTama() {
         double centerX = tamaDessin.getWidth()/2;
         double centerY = tamaDessin.getHeight()/2;
@@ -125,6 +146,9 @@ public class TamaJPanel extends GridPane {
         pupilleD.colorieToi(tamaDessin.getGraphicsContext2D());
     }
 
+    /**
+     * draw the died Tamagoshi on the canvas
+     */
     private void dessineTamaMort() {
         double centerX = tamaDessin.getWidth()/2;
         double centerY = tamaDessin.getHeight()/2;
@@ -162,16 +186,25 @@ public class TamaJPanel extends GridPane {
         oeilD2.dessineToi(tamaDessin.getGraphicsContext2D(), epaisseurTrait);
     }
 
+    /**
+     * forbid the tamagoshi to eat until reactiveBoutons is called
+     */
     public void desactiveBoutonManger() {
         boutonManger.setDisable(true);
         refreshEtat();
     }
 
+    /**
+     * forbid the tamagoshi to play until reactiveBoutons is called
+     */
     public void desactiveBoutonJouer(){
         boutonJouer.setDisable(true);
         refreshEtat();
     }
 
+    /**
+     * allow the tamagoshi to eat and play
+     */
     public void reactiveBoutons() {
         if (tamagoshi.isAlive()) {
             boutonJouer.setDisable(false);

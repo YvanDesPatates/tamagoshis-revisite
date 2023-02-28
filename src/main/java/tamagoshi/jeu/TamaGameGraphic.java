@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+/**
+ * this class handle the main window and the game system by intercepting tamahgoshi's interactions
+ */
 public class TamaGameGraphic{
     private GridPane root;
     int nbTama;
@@ -29,6 +32,9 @@ public class TamaGameGraphic{
     private final Logger gameLog;
     private final Stage primaryStage;
 
+    /**
+     * @param primaryStage has to be the primaryStage given by JavaFX to the Application
+     */
     public TamaGameGraphic(Stage primaryStage) {
         gameLog = Logger.getLogger("gameLog");
         this.primaryStage = primaryStage;
@@ -39,10 +45,16 @@ public class TamaGameGraphic{
         primaryStage.setOnCloseRequest(event -> Platform.exit());
     }
 
+    /**
+     * show the main window that allow the user to play
+     */
     public void show(){
         primaryStage.show();
     }
 
+    /**
+     * initialise window
+     */
     private void initialisationFenetre() {
         root = new GridPane();
         Scene scene = new Scene(root, 550, 200);
@@ -50,6 +62,9 @@ public class TamaGameGraphic{
         primaryStage.setScene(scene);
     }
 
+    /**
+     * set the necessary content in the main window to create the tamagoshis we will play with
+     */
     private void affichagePourCreationTamagoshis() {
         gameLog.info("choix du nombre de tamagoshis");
         Map<Integer, Button> boutons = new HashMap<>(Map.of(
@@ -72,6 +87,9 @@ public class TamaGameGraphic{
         root.add(ok, 1, 3);
     }
 
+    /**
+     * set the necessary content in the main window to display information to the player during the game
+     */
     private void lancementPartie() {
         Tamagoshi.setLifeTime(5);
         derouleJeux = new TextArea();
@@ -84,6 +102,9 @@ public class TamaGameGraphic{
         afficherTextLogEtPartie("\n -- début du tour n°" + nbTour + " --");
     }
 
+    /**
+     * generate nbTama Tamagoshis and graphically launch them
+     */
     private void creationTamas() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double size = Math.min(screenSize.getWidth() / Math.min(nbTama, 4), 500);
@@ -111,6 +132,9 @@ public class TamaGameGraphic{
 
     }
 
+    /**
+     * Method called by a Tamagoshi window after being feed
+     */
     public void tamaAEteNourrit() {
         if (!choixManger) {
             tamaFrames.forEach(TamaFrame::desactiveBoutonManger);
@@ -119,12 +143,18 @@ public class TamaGameGraphic{
         tourSuivant();
     }
 
+    /**
+     * Method called by a Tamagoshi window after being amused
+     */
     public void tamaAJoue() {
         tamaFrames.forEach(TamaFrame::desactiveBoutonJouer);
         choixJouer = true;
         tourSuivant();
     }
 
+    /**
+     * when a Tama has ate and a Tama has played, this method put in place the end of the round and the start of the following one
+     */
     private void tourSuivant() {
         if (choixManger && choixJouer) {
             if (auMoinsUnTamaEstVivant() && nbTour < Tamagoshi.getLifeTime()) {
@@ -159,7 +189,6 @@ public class TamaGameGraphic{
 
     /**
      * calculate the score depending the longevity of each Tama
-     *
      * @return the score of the player
      */
     private double score() {
@@ -170,6 +199,9 @@ public class TamaGameGraphic{
         return sommeScoresTama / tamagoshis.size();
     }
 
+    /**
+     * @return true if at least one Tamagoshi is steel alive
+     */
     private boolean auMoinsUnTamaEstVivant() {
         boolean survivant = false;
         for (Tamagoshi tamagoshi : tamagoshis) {
@@ -181,6 +213,9 @@ public class TamaGameGraphic{
         return survivant;
     }
 
+    /**
+     * convenient method to both display and log a text
+     */
     private void afficherTextLogEtPartie(String text) {
         derouleJeux.appendText(text);
         gameLog.info(text);

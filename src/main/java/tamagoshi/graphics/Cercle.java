@@ -5,6 +5,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
+/**
+ * a circle that can be drawn on a graphicContext
+ */
 public class Cercle extends ObjetGraphique{
     private final Circle circle;
 

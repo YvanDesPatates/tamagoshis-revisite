@@ -5,6 +5,9 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+/**
+ * a rectangle that can be drawn on a graphicContext
+ */
 public class Rectangle extends ObjetGraphique{
     private final Rectangle2D rectangle2D;
 
