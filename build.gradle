@@ -24,8 +24,8 @@ tasks.withType(JavaCompile) {
 }
 
 application {
-    mainModule = 'tamagoshi.graphics'
-    mainClass = 'tamagoshi.graphics.TamaFrame'
+    mainModule = 'tamagoshi'
+    mainClass = 'tamagoshi.Main'
 }
 
 javafx {

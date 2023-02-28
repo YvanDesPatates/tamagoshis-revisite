@@ -57,14 +57,22 @@ package tamagoshi;/*
  * If the Library as you received it specifies that a proxy can decide whether future versions of the GNU Lesser General Public License shall apply, that proxy's public statement of acceptance of any version is permanent authorization for you to choose that version for the Library.
  */
 
-import tamagoshi.jeu.TamaGame;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import tamagoshi.jeu.TamaGameGraphic;
 
 /**
  * runnable main class.
  */
-public class Main {
+public class Main extends Application {
+
+    @Override
+    public void start(Stage primaryStage) {
+        TamaGameGraphic jeu = new TamaGameGraphic(primaryStage);
+        jeu.show();
+    }
+
     public static void main(String[] args) {
-        TamaGame jeux = new TamaGame();
-        jeux.play();
+        launch();
     }
 }

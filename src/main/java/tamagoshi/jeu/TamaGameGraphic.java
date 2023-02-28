@@ -1,6 +1,5 @@
 package tamagoshi.jeu;
 
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class TamaGameGraphic extends Application {
+public class TamaGameGraphic{
     private GridPane root;
     int nbTama;
     List<TamaFrame> tamaFrames = new ArrayList<>();
@@ -28,23 +27,20 @@ public class TamaGameGraphic extends Application {
     private boolean choixJouer;
     TextArea derouleJeux;
     private final Logger gameLog;
-    private Stage primaryStage;
+    private final Stage primaryStage;
 
-    public TamaGameGraphic() {
+    public TamaGameGraphic(Stage primaryStage) {
         gameLog = Logger.getLogger("gameLog");
-    }
-
-
-    @Override
-    public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         initialisationFenetre();
 
         affichagePourCreationTamagoshis();
 
-        primaryStage.show();
-
         primaryStage.setOnCloseRequest(event -> Platform.exit());
+    }
+
+    public void show(){
+        primaryStage.show();
     }
 
     private void initialisationFenetre() {
@@ -188,9 +184,5 @@ public class TamaGameGraphic extends Application {
     private void afficherTextLogEtPartie(String text) {
         derouleJeux.appendText(text);
         gameLog.info(text);
-    }
-
-    public static void main(String[] args) {
-        launch();
     }
 }
