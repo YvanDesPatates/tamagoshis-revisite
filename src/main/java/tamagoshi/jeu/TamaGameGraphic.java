@@ -61,13 +61,18 @@
 package tamagoshi.jeu;
 
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import tamagoshi.graphics.TamaFrame;
 import tamagoshi.tamagoshis.Tamagoshi;
+import tamagoshi.util.FileStore;
 import tamagoshi.util.RandomGenerator;
 
 import java.awt.*;
@@ -133,18 +138,35 @@ public class TamaGameGraphic{
                 6, new Button("6"),
                 8, new Button("8")
         ));
-        nbTama = 8;
 
-        boutons.forEach((nb, button) -> button.setOnAction(e -> nbTama = nb));
+        nbTama = FileStore.getInstance().getNbTama();
+        Label prefix = new Label("nombre choisi");
+        Label nbTamaText = new Label(": "+nbTama);
+
+        boutons.forEach((nb, button) -> button.setOnAction(e -> {
+            nbTama = nb;
+            nbTamaText.setText(": "+nb);
+        }));
 
         Button ok = new Button("ok");
         ok.setOnAction(event -> {
+            try {
+                FileStore.getInstance().saveNbTama(nbTama);
+            } catch (Exception e){
+                gameLog.info(e.getMessage());
+            }
             creationTamas();
             lancementPartie();
         });
 
-        boutons.forEach((nb, bouton) -> root.add(bouton, nb / 2, 0));
-        root.add(ok, 1, 3);
+        boutons.forEach((nb, bouton) -> {
+            root.add(bouton, nb / 2, 0);
+            root.getColumnConstraints().add(new ColumnConstraints(primaryStage.getScene().getWidth() / 6 ));
+        } );
+        root.add(prefix, 2, 2);
+        root.add(nbTamaText, 3, 2);
+        root.add(ok, 2, 3);
+        root.setAlignment(Pos.CENTER);
     }
 
     /**
