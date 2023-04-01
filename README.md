@@ -1,5 +1,12 @@
 ## projet Tamagoshi
 
+### Jouer
+```
+git clone https://gitlabinfo.iutmontp.univ-montp2.fr/rouxy/tamagoshis.git
+cd tamagoshis
+./gradlew run
+```
+
 ### Règles
 Choisir un nombre de Tamagoshis, les garder en vie le plus longtemps possible
 
