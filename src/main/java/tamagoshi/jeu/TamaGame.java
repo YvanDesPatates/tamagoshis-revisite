@@ -146,13 +146,13 @@ public class TamaGame {
         List<String> noms = Arrays.asList(nomsSaisis.split(" "));
         if (nomsSaisis.equalsIgnoreCase("r")){
             noms = new ArrayList<>();
-            for (int i = 0; i < random.nextInt(2, 6); i++) {
+            for (int i = 0; i < random.nextInt(4) + 2; i++) {
                 noms.add(RandomGenerator.generateRandomName());
             }
         }
 
         for (String nom : noms) {
-            int type = random.nextInt(1, 101);
+            int type = random.nextInt(100);
             if (type < 33) {
                 tamagoshis.add(new GrosJoueur(nom));
             } else if (type < 66 ){

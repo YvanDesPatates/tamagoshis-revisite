@@ -79,7 +79,7 @@ public class RandomGenerator {
      */
     public static String generateRandomName() {
         StringBuilder name = new StringBuilder();
-        int longueurNom = random.nextInt(3, 7);
+        int longueurNom = random.nextInt(4) + 3;
         boolean voyelle = startWithVowel();
 
         for (int i = 0; i < longueurNom; i++) {
@@ -98,14 +98,14 @@ public class RandomGenerator {
      * @return a random vowel
      */
     private static char pickRandomeVowel() {
-        return VOYELLES[random.nextInt(0, VOYELLES.length)];
+        return VOYELLES[random.nextInt(VOYELLES.length)];
     }
 
     /**
      * @return a random consonant
      */
     private static char pickRandomeConsonant() {
-        return CONSONNES[random.nextInt(0, CONSONNES.length)];
+        return CONSONNES[random.nextInt(CONSONNES.length)];
     }
 
     /**
@@ -120,7 +120,7 @@ public class RandomGenerator {
      */
     public static Tamagoshi generateRandomTamagoshi() {
         String nom = generateRandomName();
-        int type = random.nextInt(1, 101);
+        int type = random.nextInt(100);
         if (type < 33) {
             return new GrosJoueur(nom);
         }

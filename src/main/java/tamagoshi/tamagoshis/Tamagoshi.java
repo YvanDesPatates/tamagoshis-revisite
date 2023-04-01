@@ -103,16 +103,16 @@ public class Tamagoshi {
     public Tamagoshi(String name) {
         this.name = name;
         age = 0;
-        maxEnergy = random.nextInt(5, 10);
-        energy = random.nextInt(3, 8);
-        maxFun = random.nextInt(5, 10);
-        fun = random.nextInt(3, 8);
+        maxEnergy = random.nextInt(5) + 5;
+        energy = random.nextInt(5) + 3;
+        maxFun = random.nextInt(5) + 5;
+        fun = random.nextInt(5) + 3;
         tamaLog = Logger.getLogger("tamaLog");
     }
 
     /**
-     *
      * print the feeling of a Tama depending on his energy and his fun
+     * @return this feeling
      */
     public String parle() {
         boolean happyEnergy = energy > 4;
@@ -141,7 +141,7 @@ public class Tamagoshi {
         boolean aFaim = energy < maxEnergy;
 
         if (aFaim) {
-            addEnergy(random.nextInt(1, 4));
+            addEnergy(random.nextInt(3) + 1);
             tamaLog.info(() -> name+" : un régal ce grec");
         } else
             tamaLog.info(() -> name+" : j'suis déjà full mon pote");
@@ -157,7 +157,7 @@ public class Tamagoshi {
         boolean veutJouer = fun < maxFun;
 
         if (veutJouer) {
-            addFun(random.nextInt(1, 4));
+            addFun(random.nextInt(3) + 1);
             tamaLog.info(() -> name+" : c'est vla drôle t'es un bon toi");
         } else
             tamaLog.info(() -> name+" : bouge de là tu vois pas jsuis pas dispo");
