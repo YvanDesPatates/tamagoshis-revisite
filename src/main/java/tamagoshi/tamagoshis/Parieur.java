@@ -69,9 +69,6 @@ import java.util.Random;
 public class Parieur extends Tamagoshi{
     private final Random random;
 
-    /**
-     * @see Tamagoshi
-     */
     public Parieur(String name) {
         super(name);
         random = new Random();
@@ -84,7 +81,7 @@ public class Parieur extends Tamagoshi{
     @Override
     public boolean jouer() {
         boolean res = super.jouer();
-        if (random.nextInt(1, 101) <= 15){
+        if (random.nextInt(100) <= 15){
             kill();
             tamaLog.info(getName()+" adore jouer avec sa vie ! malheureusement cette fois ça ne lui à pas reussi (っ˘̩╭╮˘̩)っ");
         }

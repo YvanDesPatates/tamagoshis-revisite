@@ -87,15 +87,20 @@ public abstract class ObjetGraphique {
 
     /**
      * draw the shape on the graphicsContext
+     * @param graphicsContext to draw on
      */
     public abstract void dessineToi(GraphicsContext graphicsContext);
 
     /**
      * draw the shape on the graphicsContext and fill it
+     * @param graphicsContext to fill on
      */
     public abstract void colorieToi(GraphicsContext graphicsContext);
 
     /**
+     * used to know if a point is include in a ObjectGraphique
+     * @param x part of the coordinates
+     * @param y part of the coordinates
      * @return true if the point (x, y) is in the area of the shape
      */
     public abstract boolean contient(int x, int y);

@@ -11,3 +11,4 @@ Choisir un nombre de Tamagoshis, les garder en vie le plus longtemps possible
 - JavaFx : utilisation des méthodes vues dans le TD plus utilisation des gridPane et approfondissement des Stage pour le multifenetrage
 - Integration d'une license publique avec les fonctionnalitées de l'IDE
 - Utilisation du Modèle-Vue-Controller renommé respectivement tamagoshi-graphics-jeu
+- Persistance du choix du nombre de Tamagoshis de la dernière partie grâce à la classe Propoerties (voire FileStore.java)
