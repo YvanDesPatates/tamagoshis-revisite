@@ -10,6 +10,10 @@ cd tamagoshis
 ### Règles
 Choisir un nombre de Tamagoshis, les garder en vie le plus longtemps possible
 
+Attention, en plus des GrosMangeur et des GrosJoueurs, certains sont des Parieurs et ont 15% de chances de mourrir quand vous jouer avec !
+
+Vous ne saurez qu'as la fin le type de chaque tamagoshi
+
 ### Principes vus en cours et implémentés
 - Tracage du jeu en console grâce aux Loggers
 - Utilisation des lambdas en particulier pour les évènements graphiques et les foreach
@@ -19,3 +23,4 @@ Choisir un nombre de Tamagoshis, les garder en vie le plus longtemps possible
 - Integration d'une license publique avec les fonctionnalitées de l'IDE
 - Utilisation du Modèle-Vue-Controller renommé respectivement tamagoshi-graphics-jeu
 - Persistance du choix du nombre de Tamagoshis de la dernière partie grâce à la classe Propoerties (voire FileStore.java)
+- Internationalisation de l'interface avec le ResourceBundle et des fichiers properties (français par défaut et anglais possible)

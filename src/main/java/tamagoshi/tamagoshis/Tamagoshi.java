@@ -60,7 +60,11 @@
 
 package tamagoshi.tamagoshis;
 
+import tamagoshi.jeu.TamaGameGraphic;
+
+import java.util.Objects;
 import java.util.Random;
+import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 /**
@@ -96,6 +100,10 @@ public class Tamagoshi {
 
     protected Logger tamaLog;
 
+    ResourceBundle messages;
+
+
+
     /**
      * @param name : his cutty nickName
      * create new tamagoshi with 0 years old with random maxEnergy and Energy
@@ -108,6 +116,7 @@ public class Tamagoshi {
         maxFun = random.nextInt(5) + 5;
         fun = random.nextInt(5) + 3;
         tamaLog = Logger.getLogger("tamaLog");
+        messages = Objects.requireNonNullElse(TamaGameGraphic.getMessages(), ResourceBundle.getBundle("messages") );
     }
 
     /**
@@ -117,16 +126,16 @@ public class Tamagoshi {
     public String parle() {
         boolean happyEnergy = energy > 4;
         boolean happyFun = fun > 4;
-        String etat = " est heureux";
+        String etat = " "+ messages.getString("heureux");
 
         if (!isAlive())
-            etat = " est dead par ta faute";
+            etat = " "+ messages.getString("mort");
         else if(!happyEnergy && !happyFun)
-            etat = " a la dalle et s'ennuie à mourrir";
+            etat = " "+messages.getString("aFaim")+" et "+messages.getString("aFun");
         else if(!happyEnergy)
-            etat = " a la dalle";
+            etat = " "+messages.getString("aFaim");
         else if(!happyFun)
-            etat = " s'ennuie à mourrir";
+            etat = " "+messages.getString("aFun");
 
         String finalEtat = etat;
         tamaLog.info(() -> name + finalEtat);

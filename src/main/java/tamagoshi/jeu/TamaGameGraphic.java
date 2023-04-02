@@ -68,7 +68,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import tamagoshi.graphics.TamaFrame;
 import tamagoshi.tamagoshis.Tamagoshi;
@@ -76,10 +75,9 @@ import tamagoshi.util.FileStore;
 import tamagoshi.util.RandomGenerator;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Logger;
 
 /**
@@ -96,6 +94,7 @@ public class TamaGameGraphic{
     TextArea derouleJeux;
     private final Logger gameLog;
     private final Stage primaryStage;
+    private static ResourceBundle messages;
 
     /**
      * @param primaryStage has to be the primaryStage given by JavaFX to the Application
@@ -105,9 +104,30 @@ public class TamaGameGraphic{
         this.primaryStage = primaryStage;
         initialisationFenetre();
 
-        affichagePourCreationTamagoshis();
+        affichageSelectionLangue();
 
         primaryStage.setOnCloseRequest(event -> Platform.exit());
+    }
+
+    private void affichageSelectionLangue() {
+        AtomicReference<Locale> locale = new AtomicReference<>(Locale.getDefault());
+
+        Button frButton = new Button("français");
+        frButton.setOnAction( event -> locale.set(Locale.FRENCH));
+        Button enButton = new Button("english");
+        enButton.setOnAction( event -> locale.set(Locale.ENGLISH));
+
+        Button okButton = new Button("ok");
+        okButton.setOnAction( event -> {
+            messages = ResourceBundle.getBundle("messages", locale.get());
+            root.getChildren().clear();
+            affichagePourCreationTamagoshis();
+        });
+
+        root.add(frButton, 0, 0);
+        root.add(enButton,1, 0);
+        root.add(okButton, 1, 1);
+        root.setAlignment(Pos.CENTER);
     }
 
     /**
@@ -140,7 +160,7 @@ public class TamaGameGraphic{
         ));
 
         nbTama = FileStore.getInstance().getNbTama();
-        Label prefix = new Label("nombre choisi");
+        Label prefix = new Label(messages.getString("nbChoisi"));
         Label nbTamaText = new Label(": "+nbTama);
 
         boutons.forEach((nb, button) -> button.setOnAction(e -> {
@@ -179,9 +199,10 @@ public class TamaGameGraphic{
 
         root.getChildren().clear();
         root.add(derouleJeux, 0, 0);
+        root.getColumnConstraints().clear();
 
-        afficherTextLogEtPartie("\n -- la partie durera " + Tamagoshi.getLifeTime() + " tours --");
-        afficherTextLogEtPartie("\n -- début du tour n°" + nbTour + " --");
+        afficherTextLogEtPartie("\n -- "+messages.getString("dureePartie")+" " + Tamagoshi.getLifeTime() + " "+messages.getString("tour")+" --");
+        afficherTextLogEtPartie("\n -- "+messages.getString("debutTour")+" n°" + nbTour + " --");
     }
 
     /**
@@ -243,7 +264,7 @@ public class TamaGameGraphic{
                 nbTour++;
                 choixJouer = false;
                 choixManger = false;
-                afficherTextLogEtPartie("\n -- début du tour n°" + nbTour + " --");
+                afficherTextLogEtPartie("\n -- "+ messages.getString("debutTour")+" n°" + nbTour + " --");
                 tamaFrames.forEach(TamaFrame::reactiveBoutons);
                 tamagoshis.forEach(Tamagoshi::endOfADay);
             } else {
@@ -260,11 +281,11 @@ public class TamaGameGraphic{
     private void afficheScore() {
         afficherTextLogEtPartie("\n\n----------------------- Bilan -----------------------");
         for (Tamagoshi tamagoshi : tamagoshis) {
-            String prefix = "\nle " + tamagoshi.getClass().getSimpleName() + " " + tamagoshi.getName();
+            String prefix = "\n" + tamagoshi.getClass().getSimpleName() + " " + tamagoshi.getName();
             if (tamagoshi.isAliveWithoutCountingAge())
-                afficherTextLogEtPartie(prefix + " est toujours en vie et danse la guigandélire (✯◡✯)");
+                afficherTextLogEtPartie(prefix +" "+ messages.getString("survivant"));
             else
-                afficherTextLogEtPartie(prefix + " est mort par ta faute (×_×)");
+                afficherTextLogEtPartie(prefix +" "+ messages.getString("mort"));
         }
         afficherTextLogEtPartie("\n ----------- Score ------------------- \nscore : " + score() + " %");
     }
@@ -301,5 +322,9 @@ public class TamaGameGraphic{
     private void afficherTextLogEtPartie(String text) {
         derouleJeux.appendText(text);
         gameLog.info(text);
+    }
+
+    public static ResourceBundle getMessages() {
+        return messages;
     }
 }

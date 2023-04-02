@@ -71,6 +71,8 @@ import javafx.scene.paint.Color;
 import tamagoshi.jeu.TamaGameGraphic;
 import tamagoshi.tamagoshis.Tamagoshi;
 
+import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 /**
@@ -78,7 +80,7 @@ import java.util.logging.Logger;
  */
 public class TamaJPanel extends GridPane {
     private final Label etat;
-    private TamaGameGraphic controler;
+    private final TamaGameGraphic controler;
     private final Tamagoshi tamagoshi;
     private final Label reponse;
     private final Canvas tamaDessin;
@@ -86,6 +88,7 @@ public class TamaJPanel extends GridPane {
     private Button boutonJouer;
     private final Logger interfaceLog;
     boolean etaitEnVie = true;
+    ResourceBundle messages;
 
     /**
      * this constructor build and show a new window representing a tamagoshi
@@ -96,6 +99,7 @@ public class TamaJPanel extends GridPane {
      */
     public TamaJPanel(Tamagoshi tamagoshi, double width, double height, TamaGameGraphic controler) {
         interfaceLog = Logger.getLogger("interfaceLog");
+        messages = Objects.requireNonNullElse(TamaGameGraphic.getMessages(), ResourceBundle.getBundle("messages") );
 
         this.tamagoshi = tamagoshi;
         etat = new Label(tamagoshi.parle());
@@ -129,13 +133,13 @@ public class TamaJPanel extends GridPane {
      * create a "play" button which will execute the jouer() method on the Tamagoshi when pressed
      */
     private void createBoutonJouer() {
-        Button button = new Button("amuser");
+        Button button = new Button(messages.getString("btnJouer"));
         button.setOnMouseClicked(event -> {
             interfaceLog.info("clique sur le bouton 'amuser' de " + tamagoshi.getName());
             if (tamagoshi.jouer()) {
-                reponse.setText("c'est vla drôle t'es un bon toi");
+                reponse.setText(messages.getString("joue"));
             } else {
-                reponse.setText("bouge de là tu vois pas jsuis pas dispo");
+                reponse.setText(messages.getString("jouePas"));
             }
             refreshEtat();
             controler.tamaAJoue();
@@ -147,13 +151,13 @@ public class TamaJPanel extends GridPane {
      * create a "eat" button which will execute the manger() method on the Tamagoshi when pressed
      */
     private void createBoutonManger() {
-        Button button = new Button("nourrir");
+        Button button = new Button(messages.getString("btnManger"));
         button.setOnMouseClicked(event -> {
             interfaceLog.info("clique sur le bouton 'jouer' de " + tamagoshi.getName());
             if (tamagoshi.manger()) {
-                reponse.setText("un régal ce grec");
+                reponse.setText(messages.getString("mange"));
             } else {
-                reponse.setText("j'suis déjà full mon pote");
+                reponse.setText(messages.getString("mangePas"));
             }
             refreshEtat();
             controler.tamaAEteNourrit();
