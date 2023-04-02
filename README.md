@@ -7,6 +7,12 @@ cd tamagoshis
 ./gradlew run
 ```
 
+### Besoins de doc ?
+```
+./gradlew javadoc
+x-www-browser build/docs/javadoc/index.html
+```
+
 ### Règles
 Choisir un nombre de Tamagoshis, les garder en vie le plus longtemps possible
 
