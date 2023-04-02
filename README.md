@@ -2,7 +2,7 @@
 
 ### Jouer
 ```
-git clone https://gitlabinfo.iutmontp.univ-montp2.fr/rouxy/tamagoshis.git
+git clone https://github.com/YvanDesPatates/tamagoshis-revisite.git
 cd tamagoshis
 ./gradlew run
 ```
