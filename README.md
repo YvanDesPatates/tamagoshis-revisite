@@ -3,7 +3,7 @@
 ### Jouer
 ```
 git clone https://github.com/YvanDesPatates/tamagoshis-revisite.git
-cd tamagoshis
+cd tamagoshis-revisite
 ./gradlew run
 ```
 
